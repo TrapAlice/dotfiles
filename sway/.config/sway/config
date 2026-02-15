@@ -1,0 +1,106 @@
+set $term ghostty
+set $mod Mod4
+
+set $disp1 HDMI-A-2
+set $disp2 DP-1
+
+output $disp2 resolution 1920x1080 position 0 0
+output $disp1 resolution 1920x1080 position 1920 0
+output * bg ~/wallpapers/wallpaper1.jpg stretch
+
+input * {
+	xkb_layout "gb+custom(grave_to_bslash)"
+	xkb_options "caps:escape,grave:backslash"
+}
+
+bar {
+    status_command ~/.config/sway/swaybar.sh
+	position top
+}
+
+gaps inner 10
+gaps outer 10
+
+bindsym $mod+Return exec $term -e fish
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+e exit
+bindsym $mod+Shift+q kill
+bindsym Print exec grim ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+bindsym Shift+Print exec grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+
+focus_follows_mouse no
+
+bindsym $mod+d exec wofi --show run
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Window layouts
+bindsym $mod+f fullscreen toggle
+bindsym $mod+shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+v splitv
+bindsym $mod+b splith
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+a focus parent
+
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 Azur Lane
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws0 10
+
+workspace $ws1 output $disp1
+workspace $ws2 output $disp2
+workspace $ws3 output $disp1
+workspace $ws4 output $disp2
+workspace $ws5 output $disp1
+workspace $ws6 output $disp2
+workspace $ws7 output $disp1
+workspace $ws8 output $disp2
+workspace $ws9 output $disp1
+workspace $ws0 output $disp2
+
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws0
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws0
+
+exec --no-startup-id ~/.config/sway/setup-audio.sh
+exec --no-startup-id waybar
+
+for_window [app_id="Waydroid"] floating enable, resize set 1280 720, move position 0 0
+for_window [app_id="ALVGui"] floating enable, resize set 640 720, move position 1280 0
+for_window [class="KeePassXC"] floating enable
+for_window [app_id="com.mitchellh.ghostty"] title_format "Ghostty"
