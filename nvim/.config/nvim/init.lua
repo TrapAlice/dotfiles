@@ -18,7 +18,22 @@ vim.pack.add({
 	{ src = 'https://github.com/Civitasv/cmake-tools.nvim' },
 })
 
-require('nvim-tree').setup({})
+local function nvim_tree_keybinds(bufnr)
+	local api = require "nvim-tree.api"
+
+    local function opts(desc)
+      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    -- default mappings
+	api.config.mappings.default_on_attach(bufnr)
+
+    -- custom mappings
+	vim.keymap.set('n', '<S-l>', '<C-W>l', opts("Move to right window"))
+end
+require('nvim-tree').setup({
+	on_attach = nvim_tree_keybinds,
+})
 require('toggleterm').setup({})
 require('blink.cmp').setup({
 	keymap = {
