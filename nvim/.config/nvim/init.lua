@@ -34,7 +34,11 @@ end
 require('nvim-tree').setup({
 	on_attach = nvim_tree_keybinds,
 })
-require('toggleterm').setup({})
+
+require('toggleterm').setup({
+	direction = 'float'
+})
+
 require('blink.cmp').setup({
 	keymap = {
 		preset = 'cmdline' ,
