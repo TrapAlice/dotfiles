@@ -163,7 +163,7 @@ keybind('v', 'k', 'gk')
 keybind('n', '<C-b>', '<C-f>')
 keybind('n', '<C-f>', '<C-b>')
 
-keybind('n', '<C-d>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
+keybind({'n', 't'}, '<C-d>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
 keybind('n', '<C-k>', vim.diagnostic.open_float)
 
 -- Commands
