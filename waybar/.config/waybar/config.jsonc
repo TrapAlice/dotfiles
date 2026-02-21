@@ -19,6 +19,7 @@
         "custom/memory",
 		"custom/weather",
         "custom/datetime",
+		"custom/updates",
         "tray"
     ],
     // Modules configuration
@@ -83,6 +84,14 @@
 		"exec": "/home/alex/.config/waybar/custom/weather.sh",
 		"return-type": "json",
 		"interval": 60,
+		"tooltip": true
+    },
+    "custom/updates": {
+		"exec": "/home/alex/.config/waybar/custom/updates.sh",
+		"on-click": "/home/alex/.config/waybar/custom/updates.sh update",
+		"return-type": "json",
+		"interval": 86400, //1 day
+		"min-length": 3,
 		"tooltip": true
     }
 }

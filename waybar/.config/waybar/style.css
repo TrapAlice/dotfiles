@@ -326,3 +326,19 @@ label:focus {
     background-color: #0069d4;
 }
 
+
+#custom-updates.green {
+	background-color: #479147;
+}
+
+#custom-updates.yellow {
+	background-color: #CFC221;
+}
+
+#custom-updates.red {
+	background-color: #D16060;
+}
+
+#custom-updates {
+	border-radius: 10px;
+}
