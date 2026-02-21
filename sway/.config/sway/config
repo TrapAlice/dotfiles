@@ -96,6 +96,7 @@ bindsym $mod+Shift+0 move container to workspace $ws0
 exec --no-startup-id ~/.config/sway/setup-audio.sh
 exec --no-startup-id swaync
 exec --no-startup-id waybar
+exec --no-startup-id gammastep
 
 for_window [app_id="Waydroid"] floating enable, resize set 1280 720, move position 0 0
 for_window [app_id="ALVGui"] floating enable, resize set 640 720, move position 1280 0
