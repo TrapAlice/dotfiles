@@ -1,0 +1,88 @@
+// -*- mode: jsonc -*-
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 30, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 12, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "sway/workspaces"
+    ],
+    "modules-center": [
+    ],
+    "modules-right": [
+        "pulseaudio",
+		"custom/netspeed",
+		"custom/gpu",
+        "custom/cpu",
+        "custom/memory",
+		"custom/weather",
+        "custom/datetime",
+        "tray"
+    ],
+    // Modules configuration
+    "sway/workspaces": {
+        "enable-bar-scroll": true,
+        "warp-on-scroll": false,
+        "format": "{name}"
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/gpu": {
+		"exec": "/home/alex/.config/waybar/custom/gpu_load.sh",
+		"return-type": "json",
+		"interval": 5,
+		"tooltip": true,
+		"min-length": 15
+    },
+    "custom/cpu": {
+		"exec": "/home/alex/.config/waybar/custom/cpu.sh",
+		"return-type": "json",
+		"tooltip": true
+    },
+    "custom/datetime": {
+		"exec": "/home/alex/.config/waybar/custom/datetime.sh",
+		"return-type": "json",
+		"interval": 1,
+		"tooltip": true
+    },
+    "custom/netspeed": {
+		"exec": "/home/alex/.config/waybar/custom/net_speed.sh",
+		"return-type": "json",
+		"tooltip": true,
+		"min-length": 18
+    },
+    "custom/memory": {
+		"exec": "/home/alex/.config/waybar/custom/mem.sh",
+		"return-type": "json",
+		"interval": 5,
+		"tooltip": true
+    },
+    "custom/weather": {
+		"exec": "/home/alex/.config/waybar/custom/weather.sh",
+		"return-type": "json",
+		"interval": 60,
+		"tooltip": true
+    }
+}
