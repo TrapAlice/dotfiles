@@ -1,6 +1,4 @@
 vim.loader.enable()
-vim.g.mapleader = ','
-
 vim.pack.add({
 	{ src = 'https://github.com/vim-scripts/a.vim' },
 	{ src = 'https://github.com/numToStr/Comment.nvim' },
@@ -17,7 +15,6 @@ vim.pack.add({
 	{ src = 'https://github.com/saghen/blink.cmp' },
 	{ src = 'https://github.com/Civitasv/cmake-tools.nvim' },
 })
-
 local function nvim_tree_keybinds(bufnr)
 	local api = require "nvim-tree.api"
 
@@ -43,6 +40,8 @@ require('blink.cmp').setup({
 	keymap = {
 		preset = 'cmdline' ,
 		['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+		['<CR>'] = {'accept', 'fallback'},
+		['<Tab>'] = false, -- Tab is handled below in keybinds
 	},
 	completion = { menu = { auto_show = true } },
 	fuzzy = { implementation = "lua" },
@@ -126,6 +125,8 @@ vim.api.nvim_set_hl(0, "IncSearch", {
 	bg = "#cd8b60",
 })
 
+vim.g.mapleader = ','
+
 -- Trim excess whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
@@ -139,11 +140,35 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 local keybind = vim.keymap.set
 -- Keybinds
 keybind('n', '<C-Space>', require('telescope.builtin').buffers)
-keybind('n', '<leader>s', require('telescope.builtin').live_grep)
+keybind('n', '<leader>sa', require('telescope.builtin').live_grep)
+keybind('n', '<leader>ss', require('telescope.builtin').grep_string)
+keybind('n', '<leader>f', require('telescope.builtin').find_files)
 keybind('n', '<leader>nt', ':NvimTreeToggle<CR>')
 keybind('n', '<leader>a', ':A<CR>')
 keybind({'n', 'v', 'x'}, '<leader>c<Space>', 'gcc<ESC>', {remap = true})
 keybind('n', ';', ':')
+
+-- Make sure tab indents unless there's something to autocomplete
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  if col == 0 then
+    return false
+  end
+
+  local current_line = vim.api.nvim_get_current_line()
+  return not current_line:sub(1, col):match("^%s*$")
+end
+keybind("i", "<Tab>", function()
+  local cmp = require("blink.cmp")
+
+  if cmp.is_visible() then
+	  cmp.select_next()
+  elseif has_words_before() then
+    cmp.show_and_insert()
+  else
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true),"n",true)
+  end
+end, { silent = true })
 
 -- Split management
 keybind('n', '<S-t>', '<C-W>v')
